@@ -4,20 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Track extends Model
+class Playlist extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'slug',
+        'user_id',
         'title',
-        'artist',
-        'image',
-        'audio',
-        'is_visible',
-        'play_count',
     ];
 
     public function getRouteKeyName(): string
@@ -25,8 +22,13 @@ class Track extends Model
         return 'slug';
     }
 
-    public function playlists(): BelongsToMany
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(Playlist::class)->withPivot(['play_count'])->withTimestamps();
+        return $this->belongsTo(User::class);
+    }
+
+    public function tracks(): BelongsToMany
+    {
+        return $this->belongsToMany(Track::class)->withPivot(['play_count'])->withTimestamps();
     }
 }

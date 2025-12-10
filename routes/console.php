@@ -10,3 +10,7 @@ Artisan::command('inspire', function () {
 Artisan::command('hello', function () {
     dd('hello world');
 });
+
+Artisan::command('check-empty-playlist', function () {
+    dd('checking empty playlists');
+})->dailyAt('02:00');

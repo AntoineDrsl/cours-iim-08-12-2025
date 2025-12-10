@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\TrackController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,8 @@ Route::prefix('tracks')->name('tracks.')->group(function () {
         Route::put('{track}', [TrackController::class, 'update'])->name('update');
         Route::delete('{track}', [TrackController::class, 'destroy'])->name('destroy');
     });
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('playlists', PlaylistController::class)->except('show');
 });
